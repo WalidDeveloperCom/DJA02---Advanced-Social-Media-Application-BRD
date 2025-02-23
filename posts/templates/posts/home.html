@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+{% load tailwind_filters %}
+
+{% block content %}
+<div class="container mx-auto px-4">
+    <h1 class="text-3xl font-bold mb-4">Global Feed</h1>
+    
+    <form method="get" class="mb-4">
+        {{ form|crispy }}
+        <button type="submit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+            Apply Filters
+        </button>
+    </form>
+
+    {% for post in posts %}
+        <div class="bg-white shadow-md rounded-lg p-4 mb-4">
+            <p class="font-bold">{{ post.user.username }}</p>
+            <p class="text-gray-700">{{ post.content }}</p>
+            {% if post.image %}
+                <img src="{{ post.image.url }}" alt="Post image" class="mt-2 rounded-lg">
+            {% endif %}
+            <p class="text-sm text-gray-500 mt-2">{{ post.created_at }}</p>
+        </div>
+    {% empty %}
+        <p>No posts found.</p>
+    {% endfor %}
+</div>
+{% endblock %}
