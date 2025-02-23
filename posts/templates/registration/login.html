@@ -2,12 +2,12 @@
 
 {% block content %}
 <div class="container mx-auto px-4">
-    <h1 class="text-3xl font-bold mb-4">Edit Post</h1>
-    <form method="post" enctype="multipart/form-data">
+    <h2 class="text-2xl font-bold mb-4">Login</h2>
+    <form method="post" class="max-w-md">
         {% csrf_token %}
         {{ form.as_p }}
         <button type="submit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
-            Update Post
+            Login
         </button>
     </form>
 </div>

@@ -23,10 +23,12 @@ urlpatterns = [
 """
 
 from django.contrib import admin
-from django.urls import path
+from django.urls import path, include 
 from django.conf import settings
 from django.conf.urls.static import static
+from django.contrib.auth import views as auth_views 
 from posts import views
+from posts.views import SignUpView 
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -35,7 +37,11 @@ urlpatterns = [
     path('create/', views.create_post, name='create_post'),
     path('edit/<int:post_id>/', views.edit_post, name='edit_post'),
     path('delete/<int:post_id>/', views.delete_post, name='delete_post'),
+    path('accounts/', include('django.contrib.auth.urls')),
+    path('accounts/signup/', SignUpView.as_view(), name='signup'),
 ]
 
 if settings.DEBUG:
+    urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+
