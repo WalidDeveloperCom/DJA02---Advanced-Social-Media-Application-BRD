@@ -1,27 +1,43 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<div class="container mx-auto px-4">
-    <h1 class="text-3xl font-bold mb-4">Global Feed</h1>
-    
-    <form method="get" class="mb-4">
-        {{ form.as_p }}
-        <button type="submit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
-            Apply Filters
-        </button>
-    </form>
+<div class="container mx-auto px-4 py-6">
+    <h1 class="text-4xl font-extrabold text-gray-900 mb-8 text-center">Global Feed</h1>
 
+    <!-- Filter Form -->
+    <div class="bg-white shadow-lg rounded-lg p-6 mb-6">
+        <form method="get" class="grid grid-cols-1 md:grid-cols-4 gap-4 items-end">
+            {% for field in form %}
+                <div>
+                    <label class="block text-sm font-medium text-gray-700">{{ field.label }}</label>
+                    {{ field }}
+                </div>
+            {% endfor %}
+            <button type="submit" class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-6 rounded-lg transition duration-300 w-full">
+                Apply Filters
+            </button>
+        </form>
+    </div>
+    
+
+    <!-- Posts Section -->
     {% for post in posts %}
-        <div class="bg-white shadow-md rounded-lg p-4 mb-4">
-            <p class="font-bold">{{ post.user.username }}</p>
-            <p class="text-gray-700">{{ post.content }}</p>
+        <div class="bg-white shadow-lg rounded-lg p-6 mb-6 hover:shadow-xl transition duration-300">
+            <p class="text-xl font-semibold text-gray-800">{{ post.user.username }}</p>
+            <p class="text-gray-700 mt-2 leading-relaxed">{{ post.content }}</p>
+            
             {% if post.image %}
-                <img src="{{ post.image.url }}" alt="Post image" class="mt-2 rounded-lg">
+                <div class="mt-4">
+                    <img src="{{ post.image.url }}" alt="Post image" class="rounded-lg w-full max-h-96 object-cover shadow-md">
+                </div>
             {% endif %}
-            <p class="text-sm text-gray-500 mt-2">{{ post.created_at }}</p>
+            
+            <p class="text-sm text-gray-500 mt-4">{{ post.created_at }}</p>
         </div>
     {% empty %}
-        <p>No posts found.</p>
+        <div class="text-center text-gray-500 text-lg">
+            <p>No posts found.</p>
+        </div>
     {% endfor %}
 </div>
 {% endblock %}
